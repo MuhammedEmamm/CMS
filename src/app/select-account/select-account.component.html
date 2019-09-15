@@ -1,0 +1,34 @@
+<div class="page-header authentication sidebar-collapse">
+  <div class="page-header-image" style="background-image:url(assets/images/login.jpg)"></div>
+  <div class="container">
+    <div class="col-md-12 content-center">
+      <div class="card-plain">
+        <form class="form" method="" action="">
+          <div class="header">
+            <div class="logo-container">
+              <img src="assets/images/logo-orange.png" alt="">
+            </div>
+            <h5>Log in</h5>
+            <span>Select user ...</span>
+          </div>
+          <div class="content">
+            <div class="account-select-container">
+              <div *ngFor="let acc of Data">
+
+                <a (click)="SelectAccount(acc.Id)" class="btn-white-stroke btn-lg waves-effect waves-light btn-select-user"><img
+                    src="{{acc.ImageUrl}}"> {{acc.Name}}</a>
+                <div class="divider"></div>
+
+              </div>
+            </div>
+          </div>
+          <div class="footer text-center">
+            <a [routerLink]="['/']" class="btn btn-doctory btn-round btn-lg btn-block waves-effect waves-light">Another
+              Account</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

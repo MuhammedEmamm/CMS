@@ -1,0 +1,380 @@
+<!-- Page Loader -->
+<div class="page-loader-wrapper" id="page-loader">
+  <div class="loader">
+    <div class="m-t-30"><img class="zmdi-hc-spin" src="assets/images/logo-symbol.png" width="48" height="48" alt="Oreo"></div>
+    <p>Please wait...</p>
+  </div>
+</div>
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+<!-- Main Content -->
+<section class="content home">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-5 col-md-5 col-sm-12">
+        <h2>New Requestes
+          <small>Welcome to Doctory</small>
+        </h2>
+      </div>
+      <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a [routerLink]="['/appointments']"><i class="zmdi zmdi-home"></i> Doctory</a></li>
+          <li class="breadcrumb-item active">New Requestes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="body">
+            <div class="panel-group" id="accordion_filter" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-primary">
+                <div class="panel-heading" role="tab" id="headingOne_1">
+                  <h4 class="panel-title panel-heading-doctory-h"> <a role="button" data-toggle="collapse" data-parent="#accordion_filter"
+                      data-target="#filters" aria-expanded="true" aria-controls="filters" style="cursor:pointer">
+                      Filters <div class="doctory-collapse-icon demo-google-material-icon float-right">
+                        <i class="material-icons material-icons-doctory collapse-icon">keyboard_arrow_up</i></div></a>
+                  </h4>
+                </div>
+                <div id="filters" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne_1">
+                  <div class="panel-body pb-0">
+
+                    <div class="row clearfix">
+                      <div class="col-md-3 col-sm-12" *ngIf="RoleID === '2'">
+                        <label for="specialitySelect">Speciality</label>
+                        <div class="input-group">
+
+                          <mat-form-field style="width:70%">
+                            <mat-select class="form-control" [(ngModel)]="SpecID" (ngModelChange)="GetDocs(SpecID)">
+                              <mat-option *ngFor="let s of Specs" [value]="s.Id">
+                                {{s.name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-12" *ngIf="RoleID === '2'">
+                        <label for="DoctorSelect">Doctor</label>
+                        <div class="input-group">
+
+                          <mat-form-field style="width:70%">
+                            <mat-select class="form-control" [(ngModel)]="DocID">
+                              <mat-option *ngFor="let d of Docs" [value]="d">
+                                {{d.Name}}
+                              </mat-option>
+                              <mat-option *ngIf="Docs.length === 0">
+                                No Doctors
+                              </mat-option>
+
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-12">
+                        <label for="DoctorSelect">Calender</label>
+                        <div class="input-group">
+                          <mat-form-field style="width:80% ; margin-top:6%">
+                            <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="Date"
+                              [ngModelOptions]="{standalone: true}">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-12">
+                        <button type="submit" style="margin-top:20%" class="btn seconde-btn filter-btn-h action-btn waves-effect waves-light"
+                          (click)="Filter()">Apply</button>
+                      </div>
+
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="header">
+            <div class="row clearfix">
+              <div class="col-md-6">
+                <h2>New <strong>Requestes</strong> </h2>
+              </div>
+            </div>
+          </div>
+          <div class="body clearfix">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered table-striped js-basic-example dataTable" id="datatable-default">
+                <thead>
+                  <tr>
+                    <th>Booking #</th>
+                    <th>Patient Name</th>
+                    <th>Mobile</th>
+                    <th>Doctor Name</th>
+                    <th>Requested Date</th>
+                    <th>Requested Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let d of Data ; let i = index">
+                    <td>{{d.Id}}</td>
+                    <td>{{d.PatientName}}</td>
+                    <td>{{d.PatientNumber}}</td>
+                    <td>{{d.DoctorName}}</td>
+                    <td>{{d.DateTime | date}}</td>
+                    <td>{{d.Time.substring(0,5)}}</td>
+
+                    <td><span class="badge badge-default">{{d.AppointmentStatus}}</span></td>
+                    <td>
+                      <button class="btn action-btn waves-effect waves-light" (click)="GetApp(d.Id)" data-toggle="modal"
+                        data-target="#reschedule"><i class="material-icons doctory-icon-sm" title="View">visibility</i></button>
+
+                      <mat-form-field>
+                        <mat-select class="form-control" [(ngModel)]="Status[i]" (ngModelChange)="UpdateStatus(Status[i] , d.Id , d.DateTime , d.SlotId)">
+                          <mat-option disabled>
+                            Pending
+                          </mat-option>
+                          <mat-option [value]="2">
+                            Confirm
+                          </mat-option>
+                          <mat-option [value]="3">
+                            Reject
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <h4 class="text-center" *ngIf="Data.length === 0">No Requests on this day</h4>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Modal -->
+<div class="modal fade" id="reschedule" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title" id="largeModalLabel">Doctor Appointments</h5>
+      </div>
+      <div class="modal-body">
+        <div class="card popup-card">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="header">
+                <div class="row clearfix">
+                  <div class="col-md-6">
+                    <h2><strong>Patient</strong> Details</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="body-table">
+                <table class="table table-bordered-cutom">
+                  <tr>
+                    <td>Patient Name</td>
+                    <td>{{DataDetails.PatientName}}</td>
+                  </tr>
+                  <tr>
+                    <td>Mobile</td>
+                    <td>{{DataDetails.PatientNumber}}</td>
+                  </tr>
+                  <tr>
+                    <td>ID Number</td>
+                    <td>{{DataDetails.PatientId}}</td>
+                  </tr>
+                  <tr>
+                    <td>Birthdate</td>
+                    <td>{{DataDetails.PatientDOB|date}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="header">
+                <div class="row clearfix">
+                  <div class="col-md-6">
+                    <h2><strong>Request</strong> Details</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="body-table">
+                <table class="table table-bordered-cutom">
+                  <tr>
+                    <td>Booking #</td>
+                    <td>{{DataDetails.Id}}</td>
+                  </tr>
+                  <tr>
+                    <td>Request Date</td>
+                    <td>{{DataDetails.DateTime | date}}</td>
+                  </tr>
+                  <tr>
+                    <td>Request Time</td>
+                    <td>{{DataDetails.Time}}</td>
+                  </tr>
+
+                  <tr>
+                    <td>Speciality</td>
+                    <td>{{DataDetails.Specialty}}</td>
+                  </tr>
+                  <tr>
+                    <td>Clinic Name</td>
+                    <td>{{DataDetails.ClinicName}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn action-btn btn-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="modal fade" id="delete" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title" id="largeModalLabel">Delete</h5>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="body">
+            <form>
+              <div class="row clearfix">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Delete Reason">
+                    <small class="form-text text-muted">You must insert the delete reason.</small>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default action-btn waves-effect waves-light">Confirm</button>
+        <button type="button" class="btn btn-danger action-btn waves-effect waves-light" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+<ng-template #modalContent let-close="close">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="title" id="largeModalLabel">Doctor Appointments</h5>
+    </div>
+    <div class="modal-body">
+      <div class="card popup-card">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="header">
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <h2><strong>Patient</strong> Details</h2>
+                </div>
+              </div>
+            </div>
+            <div class="body-table">
+              <table class="table table-bordered-cutom">
+                <tr>
+                  <td>Patient Name</td>
+                  <td>{{DataDetails.PatientName}}</td>
+                </tr>
+                <tr>
+                  <td>Mobile</td>
+                  <td>{{DataDetails.PatientNumber}}</td>
+                </tr>
+                <tr>
+                  <td>ID Number</td>
+                  <td>{{DataDetails.PatientId}}</td>
+                </tr>
+                <tr>
+                  <td>Birthdate</td>
+                  <td>{{DataDetails.PatientDOB|date}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="header">
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <h2><strong>Request</strong> Details</h2>
+                </div>
+              </div>
+            </div>
+            <div class="body-table">
+              <table class="table table-bordered-cutom">
+                <tr>
+                  <td>Booking #</td>
+                  <td>{{DataDetails.Id}}</td>
+                </tr>
+                <tr>
+                  <td>Request Date</td>
+                  <td>{{DataDetails.DateTime | date}}</td>
+                </tr>
+                <tr>
+                  <td>Request Time</td>
+                  <td>{{DataDetails.Time}}</td>
+                </tr>
+
+                <tr>
+                  <td>Speciality</td>
+                  <td>{{DataDetails.Specialty}}</td>
+                </tr>
+                <tr>
+                  <td>Clinic Name</td>
+                  <td>{{DataDetails.ClinicName}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="body-form">
+      <form (ngSubmit)="ConfirmRequest(DataDetails.Id)">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-5 col-sm-12">
+            <label>Confirm Date</label>
+            <mat-form-field style="width:100%">
+              <input matInput type="date" placeholder="Choose Date" class="form-control" [(ngModel)]="CDate"
+                [ngModelOptions]="{standalone: true}">
+
+            </mat-form-field>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <label>Confirm Time</label>
+            <mat-form-field style="width:100%">
+              <input matInput placeholder="Confirm Time" type="time" class="form-control" [(ngModel)]="CTime"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+        </div>
+        <h6 class="text-center"><button class="btn btn-primary text-center" type="submit">Update</button></h6>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn action-btn btn-danger waves-effect waves-light" (click)="close()" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</ng-template>

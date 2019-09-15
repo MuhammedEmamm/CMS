@@ -1,0 +1,3 @@
+<app-nav-bar *ngIf="this.router.url !== '/' &&  this.router.url !== '/select-account' && this.router.url !== '/forget-password'"></app-nav-bar>
+<app-aside-bar *ngIf="this.router.url !== '/' && this.router.url !== '/select-account' && this.router.url !== '/forget-password'"></app-aside-bar>
+<router-outlet></router-outlet>

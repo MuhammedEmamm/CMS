@@ -1,0 +1,580 @@
+<!-- Page Loader -->
+<div class="page-loader-wrapper" id="page-loader">
+  <div class="loader">
+    <div class="m-t-30"><img class="zmdi-hc-spin" src="assets/images/logo-symbol.png" width="48" height="48" alt="Oreo"></div>
+    <p>Please wait...</p>
+  </div>
+</div>
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+<!-- Top Bar -->
+<!-- Main Content -->
+<section class="content home">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-5 col-md-5 col-sm-12">
+        <h2>Doctor Profile
+          <small>Welcome to Doctory</small>
+        </h2>
+      </div>
+      <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+        <ul class="breadcrumb float-md-right">
+          <li class="breadcrumb-item"><a [routerLink]="['/appointments']"><i class="zmdi zmdi-home"></i> Doctory</a></li>
+          <li class="breadcrumb-item active">Doctor Profile</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row clearfix">
+      <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="card profile-header">
+          <div class="header py-1 m-t-15">
+            <div class="row clearfix">
+              <div class="col-md-12">
+                <h2><strong>General Informations</strong></h2>
+                <!-- <ul class="header-dropdown">
+                  <a data-toggle="modal" data-target="#edit-general" class="section-edit" role="button" aria-haspopup="true"
+                    aria-expanded="false"><i class="zmdi zmdi-edit"></i> Edit</a>
+                </ul> -->
+              </div>
+            </div>
+          </div>
+          <div class="body text-center">
+            <div class="profile-image-container">
+              <div class="upload-btn-wrapper">
+                <button class="upload-btn"><i class="zmdi zmdi-camera"></i></button>
+                <input type="file" name="myfile" (change)="onFileChanged($event)" />
+              </div>
+              <div class="profile-image">
+                <img src="{{Data.ImageUrl}}" alt="" style="height:100%; width:100%">
+
+              </div>
+            </div>
+            <div class="text-center">
+              <small class="text-muted">User Rate: {{Data.rating}}</small>
+              <p>
+                <i class="zmdi zmdi-star" *ngIf="Data.rating >= 1"></i>
+                <i class="zmdi zmdi-star" *ngIf="Data.rating >= 2"></i>
+                <i class="zmdi zmdi-star" *ngIf="Data.rating >= 3"></i>
+                <i class="zmdi zmdi-star" *ngIf="Data.rating >= 4"></i>
+                <i class="zmdi zmdi-star" *ngIf="Data.rating >= 5"></i>
+              </p>
+            </div>
+            <div>
+              <ul class="list-unstyled text-left">
+                <li>
+                  <p><strong>Name:</strong> {{Data.Name}}</p>
+                </li>
+                <li>
+                  <p><strong>Speciality:</strong> {{Data.Speciality}}</p>
+                </li>
+                <li>
+                  <p><strong>Title:</strong> {{Data.Title}}</p>
+                </li>
+                <li>
+                  <p><strong>Gender:</strong> <span *ngIf="Data.Gender===true"> Male</span><span *ngIf="Data.Gender !==true">
+                      Female</span>
+                  </p>
+                </li>
+                <li>
+                  <p><strong>Nationality:</strong><span *ngFor="let l of Data.Nationality ;  let i = index"> {{l}}
+                      <span *ngIf="i !== Data.Language.length-1">,</span></span></p>
+                </li>
+                <li>
+                  <p><strong>Languages:</strong> <span *ngFor="let l of Data.Language ;  let i = index"> {{l}} <span
+                        *ngIf="i !== Data.Language.length-1">,</span> </span></p>
+                </li>
+                <li>
+                  <p><strong>Phone Number:</strong> {{Data.ContactNumber}}</p>
+                </li>
+                <li>
+                  <p><strong>Email Address:</strong> {{Data.Email}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-8 col-sm-12">
+        <div class="card">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#schedule">Schedule</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="about">
+              <div class="header py-1">
+                <div class="row clearfix">
+                  <div class="col-md-12">
+                    <h2><strong>About</strong></h2>
+                    <ul class="header-dropdown">
+                      <a data-toggle="modal" data-target="#edit-about" class="section-edit" role="button" aria-haspopup="true"
+                        aria-expanded="false"><i class="zmdi zmdi-edit"></i> Edit</a>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="body">
+                <h5><strong>Info</strong></h5>
+
+                <p innerHTML="{{Data.Info}}">
+
+                </p>
+
+                <br>
+                <hr>
+                <br>
+                <h5><strong>Clinic Info</strong></h5>
+
+                <p innerHTML="{{Data.ClinicInfo}}">
+
+                </p>
+
+              </div>
+            </div>
+            <div class="tab-pane" id="schedule">
+              <div *ngIf="Type == '1'">
+                <div class="header py-1">
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <h2><strong>Working Schedule</strong></h2>
+                      <!-- <ul class="header-dropdown">
+                            <a data-toggle="modal" data-target="#edit-schedule" class="section-edit" role="button"
+                              aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-edit"></i> Edit</a>
+                          </ul> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="body">
+                  <div class="workingtime">
+                    <div *ngFor="let s of Schedule">
+                      <small class="text-muted">{{s.Date|date}}</small>
+                      <h6 style="color: #FE5644">Num of Appointments</h6>
+                      <p>{{s.NoOfAppointments}}</p>
+                      <hr>
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div *ngIf="Type == '3'">
+                <div class="header py-1">
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <h2><strong>Working Schedule</strong></h2>
+                      <!-- <ul class="header-dropdown">
+                              <a data-toggle="modal" data-target="#edit-schedule" class="section-edit" role="button"
+                                aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-edit"></i> Edit</a>
+                            </ul> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="body">
+                  <div class="workingtime">
+                    <div>
+                      <h5>Saturday
+
+                        <a (click)="OpenAddSlot();Day = 0" class="section-edit" role="button"><i class="zmdi zmdi-plus"></i>
+                          Add Slot</a>
+
+                      </h5>
+                      <div *ngFor="let s of ScheduleSlots.Day0">
+
+
+                        <label>Duration : &nbsp;</label>
+
+                        <small class="text-muted">{{s.Duration}} mins</small>
+                        <h6 style="color: #FE5644">Time</h6>
+                        <p>{{s.Time.substring(0,5)}}</p>
+                        <a (click)="GetSlotDetails(s.SlotId)" class="section-edit" role="button"><i class="zmdi zmdi-edit"></i>
+                          Edit</a>
+                        &nbsp;
+                        <a (click)="DeleteSlot(s.SlotId)" class="section-edit"><i class="zmdi zmdi-delete"></i>
+                          Delete</a>
+
+
+                        <hr>
+                      </div>
+                      <p *ngIf="ScheduleSlots.Day0.length === 0">No Slots for this Day</p>
+
+
+                      <h5>Sunday <a (click)="OpenAddSlot();Day = 1" class="section-edit" role="button"><i class="zmdi zmdi-plus"></i>
+                          Add
+                          Slot</a>
+                      </h5>
+                      <div *ngFor="let s of ScheduleSlots.Day1">
+
+                        <label>Duration : &nbsp;</label>
+
+                        <small class="text-muted">{{s.Duration}} mins</small>
+                        <h6 style="color: #FE5644">Time</h6>
+                        <p>{{s.Time.substring(0,5)}}</p>
+
+                        <a (click)="GetSlotDetails(s.SlotId)" class="section-edit" role="button"><i class="zmdi zmdi-edit"></i>
+                          Edit</a>
+                        &nbsp;
+                        <a (click)="DeleteSlot(s.SlotId)" class="section-edit"><i class="zmdi zmdi-delete"></i>
+                          Delete</a>
+
+                        <hr>
+                      </div>
+                      <p *ngIf="ScheduleSlots.Day1.length === 0">No Slots for this Day</p>
+
+
+                      <h5>Monday <a (click)="OpenAddSlot();Day = 2" class="section-edit" role="button"><i class="zmdi zmdi-plus"></i>
+                          Add
+                          Slot</a>
+                      </h5>
+                      <div *ngFor="let s of ScheduleSlots.Day2">
+
+                        <label>Duration : &nbsp;</label>
+
+                        <small class="text-muted">{{s.Duration}} mins</small>
+                        <h6 style="color: #FE5644">Time</h6>
+                        <p>{{s.Time.substring(0,5)}}</p>
+
+                        <a (click)="GetSlotDetails(s.SlotId)" class="section-edit" role="button"><i class="zmdi zmdi-edit"></i>
+                          Edit</a>
+                        &nbsp;
+                        <a (click)="DeleteSlot(s.SlotId)" class="section-edit"><i class="zmdi zmdi-delete"></i>
+                          Delete</a>
+
+                        <hr>
+                      </div>
+                      <p *ngIf="ScheduleSlots.Day2.length === 0">No Slots for this Day</p>
+
+
+                      <h5>Tuesday <a (click)="OpenAddSlot();Day = 3" class="section-edit" role="button"><i class="zmdi zmdi-plus"></i>
+                          Add
+                          Slot</a>
+                      </h5>
+                      <div *ngFor="let s of ScheduleSlots.Day3">
+
+                        <label>Duration : &nbsp;</label>
+
+                        <small class="text-muted">{{s.Duration}} mins</small>
+                        <h6 style="color: #FE5644">Time</h6>
+                        <p>{{s.Time.substring(0,5)}}</p>
+
+                        <a (click)="GetSlotDetails(s.SlotId)" class="section-edit" role="button"><i class="zmdi zmdi-edit"></i>
+                          Edit</a>
+                        &nbsp;
+                        <a (click)="DeleteSlot(s.SlotId)" class="section-edit"><i class="zmdi zmdi-delete"></i>
+                          Delete</a>
+
+                        <hr>
+                      </div>
+                      <p *ngIf="ScheduleSlots.Day3.length === 0">No Slots for this Day</p>
+
+
+                      <h5>Wednesday <a (click)="OpenAddSlot();Day = 4" class="section-edit" role="button"><i class="zmdi zmdi-plus"></i>
+                          Add
+                          Slot</a>
+                      </h5>
+                      <div *ngFor="let s of ScheduleSlots.Day4">
+
+                        <label>Duration : &nbsp;</label>
+
+                        <small class="text-muted">{{s.Duration}} mins</small>
+                        <h6 style="color: #FE5644">Time</h6>
+                        <p>{{s.Time.substring(0,5)}}</p>
+
+                        <a (click)="GetSlotDetails(s.SlotId)" class="section-edit" role="button"><i class="zmdi zmdi-edit"></i>
+                          Edit</a>
+                        &nbsp;
+                        <a (click)="DeleteSlot(s.SlotId)" class="section-edit"><i class="zmdi zmdi-delete"></i>
+                          Delete</a>
+
+                        <hr>
+                      </div>
+                      <p *ngIf="ScheduleSlots.Day4.length === 0">No Slots for this Day</p>
+
+
+                      <h5>Thursday <a (click)="OpenAddSlot();Day = 5" class="section-edit" role="button"><i class="zmdi zmdi-plus"></i>
+                          Add
+                          Slot</a>
+                      </h5>
+                      <div *ngFor="let s of ScheduleSlots.Day5">
+                        <label>Duration : &nbsp;</label>
+                        <small class="text-muted">{{s.Duration}} mins</small>
+                        <h6 style="color: #FE5644">Time</h6>
+                        <p>{{s.Time.substring(0,5)}}</p>
+
+                        <a (click)="GetSlotDetails(s.SlotId)" class="section-edit" role="button"><i class="zmdi zmdi-edit"></i>
+                          Edit</a>
+                        &nbsp;
+                        <a (click)="DeleteSlot(s.SlotId)" class="section-edit"><i class="zmdi zmdi-delete"></i>
+                          Delete</a>
+
+                        <hr>
+                      </div>
+                      <p *ngIf="ScheduleSlots.Day5.length === 0">No Slots for this Day</p>
+
+
+                      <h5>Friday <a (click)="OpenAddSlot();Day = 6" class="section-edit" role="button"><i class="zmdi zmdi-plus"></i>
+                          Add
+                          Slot</a>
+                      </h5>
+                      <div *ngFor="let s of ScheduleSlots.Day6">
+                        <label>Duration : &nbsp;</label>
+
+                        <small class="text-muted">{{s.Duration}} mins</small>
+                        <h6 style="color: #FE5644">Time</h6>
+                        <p>{{s.Time.substring(0,5)}}</p>
+
+                        <a (click)="GetSlotDetails(s.SlotId)" class="section-edit" role="button"><i class="zmdi zmdi-edit"></i>
+                          Edit</a>
+                        &nbsp;
+                        <a (click)="DeleteSlot(s.SlotId)" class="section-edit"><i class="zmdi zmdi-delete"></i>
+                          Delete</a>
+
+                        <hr>
+                      </div>
+                      <p *ngIf="ScheduleSlots.Day6.length === 0">No Slots for this Day</p>
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- POPUP General Informations -->
+<div class="modal fade" id="edit-general" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title" id="largeModalLabel">General Information</h5>
+      </div>
+      <div class="modal-body">
+        <div class="card popup-card">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Doctor Name</label>
+                <input type="text" class="form-control" value="Dr. Charlotte" disabled>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Speciality</label>
+                <input type="text" class="form-control" value="Breast Surgery" disabled>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" value="Dr. Charlotte" disabled>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Gender</label>
+                <input type="text" class="form-control" value="Male" disabled>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label>Nationality</label>
+                <input type="text" class="form-control" value="Egyptian" disabled>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Languages</label>
+                <select class="form-control selectpicker p-0" data-live-search="true" multiple>
+                  <option value="">- Doctor -</option>
+                  <option value="">Option 1</option>
+                  <option value="">Option 2</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="text" class="form-control" placeholder="Mobile Number">
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="text" class="form-control" placeholder="Email Address">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn action-btn btn-default waves-effect waves-light">Save</button>
+        <button type="button" class="btn action-btn btn-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- POPUP About -->
+<div class="modal fade" id="edit-about" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title" id="largeModalLabel">About</h5>
+      </div>
+      <div class="modal-body">
+        <div class="card popup-card">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label>About Info</label>
+                <ckeditor [editor]="Editor" [(ngModel)]="formData.DoctorInfo"></ckeditor>
+              </div>
+              <div class="form-group">
+                <label>About Clinic Info</label>
+                <ckeditor [editor]="Editor" [(ngModel)]="formData.ClinicInfo"></ckeditor>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn action-btn btn-default waves-effect waves-light" (click)="UpdateInfo()">Save</button>
+        <button type="button" class="btn action-btn btn-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- POPUP Working Time -->
+<div class="modal fade" id="edit-schedule" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title" id="largeModalLabel">Working Time</h5>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="UpdateSlot()">
+          <div class="form-group">
+            <label>Duration</label>
+            <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="SlotsDataDetails.Duration"
+              placeholder="Duration in mins" type="number" min="1">
+          </div>
+          <div class="form-group">
+            <label>Time</label>
+            <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="SlotsDataDetails.Time"
+              placeholder="Duration in mins" type="time">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" type="submit">Add</button>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn action-btn btn-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP Working Time -->
+<div class="modal fade" id="add-schedule" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title" id="largeModalLabel">Add Slot</h5>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="AddSlot(Day)">
+          <div class="form-group">
+            <label>Duration</label>
+            <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="SlotsData.Duration"
+              placeholder="Duration in mins" type="number" min="1">
+          </div>
+          <div class="form-group">
+            <label>Time</label>
+            <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="SlotsData.Time" placeholder="Duration in mins"
+              type="time">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" type="submit">Add</button>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn action-btn btn-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="title" id="largeModalLabel">Add Schedule</h5>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="AddSlot(Day)">
+        <div class="form-group">
+          <label>Duration</label>
+          <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="SlotsData.Duration"
+            placeholder="Duration in mins" type="number" min="1">
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="SlotsData.Time" placeholder="Duration in mins"
+            type="time">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success" type="submit">Add</button>
+        </div>
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn action-btn btn-danger waves-effect waves-light" (click)="close()" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalContent2 let-close="close">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="title" id="largeModalLabel">Edit Schedule</h5>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="UpdateSlot()">
+        <div class="form-group">
+          <label>Duration</label>
+          <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="SlotsDataDetails.Duration"
+            placeholder="Duration in mins" type="number" min="1">
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="SlotsDataDetails.Time"
+            placeholder="Duration in mins" type="time">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success" type="submit">Edit</button>
+        </div>
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn action-btn btn-danger waves-effect waves-light" (click)="close()" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,108 @@
+<div class="page-header authentication sidebar-collapse">
+  <div class="page-header-image" style="background-image:url(assets/images/login.jpg)"></div>
+  <div class="container">
+    <div class="col-md-12 content-center">
+      <div class="card-plain">
+        <form class="form" (ngSubmit)="Login()">
+          <div class="header">
+            <div class="logo-container">
+              <img src="assets/images/logo-orange.png" alt="">
+            </div>
+            <h5>Log in</h5>
+          </div>
+          <div class="content">
+            <div class="input-group input-lg">
+              <input type="email" class="form-control" placeholder="Enter Email" [(ngModel)]="formData.Email"
+                [ngModelOptions]="{standalone: true}">
+              <span class="input-group-addon">
+                <i class="zmdi zmdi-account-circle"></i>
+              </span>
+            </div>
+            <div class="input-group input-lg">
+              <input type="password" placeholder="Password" class="form-control" [(ngModel)]="formData.Password"
+                [ngModelOptions]="{standalone: true}" />
+              <span class="input-group-addon">
+                <i class="zmdi zmdi-lock"></i>
+              </span>
+            </div>
+            <!-- <div class="input-group input-lg" style="margin-left:6.5%"> 
+              <label>Admin</label>
+              <input type="checkbox" placeholder="Admin" class="form-control" [(ngModel)]="Admin"
+                [ngModelOptions]="{standalone: true}" />
+              <label>Doctor</label>
+              <input type="checkbox" placeholder="Doctor" class="form-control" [(ngModel)]="Doctor"
+                [ngModelOptions]="{standalone: true}" />
+            </div> -->
+          </div>
+          <div class="footer text-center">
+            <button type="submit" class="btn btn-doctory btn-round btn-lg btn-block waves-effect waves-light">SIGN IN</button>
+            <h5><a [routerLink]="['/forget-password']" class="link">Forgot Password?</a></h5>
+            <h4><a style="cursor:pointer" (click)="OpenJoinUsForm()" class="link">Are you a dcotor? Join Us</a></h4>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+<ng-template #modalContent let-close="close">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="title" id="largeModalLabel">Join Us</h5>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="Joinusform" (ngSubmit)="ContactUs()">
+        <div class="form-group">
+          <label>First Name</label>
+          <input class="form-control" placeholder="First Name" type="text" formControlName="FirstName" [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }">
+          <div *ngIf="submitted && f.FirstName.errors" class="invalid-feedback">
+            <div *ngIf="f.FirstName.errors.required"> First Name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input class="form-control" placeholder="Last Name" type="text" formControlName="LastName" [ngClass]="{ 'is-invalid': submitted && f.LastName.errors }">
+          <div *ngIf="submitted && f.LastName.errors" class="invalid-feedback">
+            <div *ngIf="f.LastName.errors.required"> Last Name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Speciality</label>
+          <input class="form-control" placeholder="Speciality" type="text" formControlName="Speciality" [ngClass]="{ 'is-invalid': submitted && f.Speciality.errors }">
+          <div *ngIf="submitted && f.Speciality.errors" class="invalid-feedback">
+            <div *ngIf="f.Speciality.errors.required">Speciality is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mobile</label>
+          <input class="form-control" placeholder="Mobile" type="text" formControlName="Mobile" [ngClass]="{ 'is-invalid': submitted && f.Mobile.errors }">
+          <div *ngIf="submitted && f.Mobile.errors" class="invalid-feedback">
+            <div *ngIf="f.Mobile.errors.required"> Mobile is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-control" placeholder="Email" type="email" formControlName="Email" [ngClass]="{ 'is-invalid': submitted && f.Email.errors }">
+          <div *ngIf="submitted && f.Email.errors" class="invalid-feedback">
+            <div *ngIf="f.Email.errors.required">Email is required</div>
+            <div *ngIf="f.Email.errors.email">Email must be a valid email address</div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <h6 class="text-center">
+            <button class="btn btn-success" type="submit">Send</button>
+
+          </h6>
+        </div>
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn action-btn btn-danger waves-effect waves-light" (click)="close()" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,32 @@
+<aside id="leftsidebar" class="sidebar">
+  <div class="menu">
+    <ul class="list">
+      <li>
+        <div class="user-info">
+          <div class="profile-image-container">
+
+            <div class="profile-image" *ngIf="RoleID === '2'"><img src="{{Data.ImageUrl}}" alt="Facility" style="height:100%"></div>
+            <div class="profile-image" *ngIf="RoleID === '1'"><img src="{{Data.ImageUrl}}"
+                alt="Doctor" style="height:100%"></div>
+
+          </div>
+          <div class="detail mb-2">
+            <h4>{{Data.Name}}</h4>
+            <small *ngIf="RoleID === '1'">{{Data.Spec}}</small>
+            <small *ngIf="RoleID === '2'">{{Data.FT}}</small>
+
+          </div>
+          <a [routerLink]="['/doctor-profile']" *ngIf="RoleID === '1'" class="btn btn-stroke-doctory btn-round waves-effect waves-light mb-3">Doctor
+            Profile</a>
+          <a [routerLink]="['/facility-profile']" *ngIf="RoleID === '2'" class="btn btn-stroke-doctory btn-round waves-effect waves-light mb-3">Facility
+            Profile</a>
+        </div>
+      </li>
+      <li class="header">MAIN</li>
+      <li [ngClass]="{'active':this.router.url === '/appointments'}"><a [routerLink]="['/appointments']">List Of
+          Appointments</a></li>
+      <li [ngClass]="{'active':this.router.url === '/request-list'}"><a [routerLink]="['/request-list']">New Requests
+          <span class="badge badge-primary" *ngIf="RoleID !== '2'">{{counter}}</span></a></li>
+    </ul>
+  </div>
+</aside>

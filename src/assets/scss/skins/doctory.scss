@@ -1,0 +1,94 @@
+﻿$white: #ffffff;
+$blue-grey-400: #484848 !default;
+$doctory-400: #FE5644 !default; /* For Menu Links */
+$doctory-500: #FE5644 !default; /* Main Color */
+$doctory-600: #FE7D44 !default; /* BTNs Hover */
+$doctory-700: #FEB944 !default;
+
+.theme-doctory .menu > ul > li > ul.normal-sub > li a:hover,
+.theme-doctory .menu > ul > li > ul > li > ul > li a:hover {
+  background-color: $doctory-400;
+}
+
+.theme-doctory{
+    &.sidebar-collapse{
+        .navbar-collapse{
+            &:before{
+                background-color: $doctory-500; 
+            }
+        }
+    }
+    .btn-primary{
+        background: $doctory-400;
+        &:active,
+        &:hover,
+        &:focus{
+            background: $doctory-600;
+        }
+        &.btn-simple{
+            border-color: $doctory-500;
+            color: $doctory-500;
+            background: transparent;
+        }
+    }    
+    .block-header{
+        h2{
+            color: $white;
+            small{
+                color: $white;
+            }
+        }
+    }
+    section.content{
+        &:before{           
+            background-color: $doctory-400;
+        }
+    }
+    .navbar, .page-loader-wrapper{
+        background:$doctory-400;
+    }
+    .bars {
+        color:$white;
+    }
+    .sidebar{
+        .menu{
+            .list{
+                li.active {
+                    background-color: transparent;
+
+                    >:first-child{
+
+                        i, span{
+                            color:$doctory-500;
+                        }
+                    }
+                }
+                a{
+                    &:hover{
+                        color:$doctory-500;
+                    }
+                }
+            }
+        }
+    }
+    .checkbox input[type="checkbox"]:checked+label::after{
+        border: 1px solid $doctory-500;
+    }   
+    .nav-tabs{
+        .nav-link.active {
+            border: 1px solid $doctory-500 !important;
+        }
+    }
+    .card{
+        .header{
+            h2{
+                &:before{
+                    background: $doctory-500;
+                }
+                strong{
+                    color: $doctory-500;
+                }
+            }
+        }
+    }
+}
